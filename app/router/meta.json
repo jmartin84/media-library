@@ -1,0 +1,12 @@
+{
+  "/": {
+    "title": "Media Library",
+    "description": "My Vuetify.js Project",
+    "keywords": ""
+  },
+  "/movie/create": {
+    "title": "Create Movie",
+    "description": "",
+    "keywords": ""
+  }
+}

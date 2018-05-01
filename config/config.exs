@@ -13,6 +13,7 @@ config :medialibrary, MedialibraryWeb.Endpoint,
 	url: [host: "localhost"],
 	secret_key_base: "mfM7nc0yglyomfvsl2GFgBnKgi8iSWSScd1mmPGJwWybpsTfxIhcfbMz+tAhRS8W",
 	render_errors: [view: MedialibraryWeb.ErrorView, accepts: ~w(html json)],
+	cache_static_manifest: "priv/static/manifest.json",
 	pubsub: [name: Medialibrary.PubSub,
 					 adapter: Phoenix.PubSub.PG2]
 

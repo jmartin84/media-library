@@ -33,7 +33,6 @@ config :medialibrary, MedialibraryWeb.Endpoint,
 config :medialibrary, MedialibraryWeb.Endpoint,
   live_reload: [
 	patterns: [
-		~r{priv/gettext/.*(po)$},
 		~r{lib/medialibrary_web/views/.*(ex)$},
 		~r{lib/medialibrary_web/templates/.*(eex)$}
 	]

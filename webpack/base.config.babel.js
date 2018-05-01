@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -18,7 +17,9 @@ module.exports = {
 	resolve: {
 		extensions: ['*', '.js', '.json', '.vue'],
 		alias: {
-			'vue$': 'vue/dist/vue.common.js'
+			'vue$': 'vue/dist/vue.common.js',
+			phoenix_html: path.resolve(__dirname, "/deps/phoenix_html/web/static/js/phoenix_html.js"),
+			phoenix: path.resolve(__dirname, "/deps/phoenix/web/static/js/phoenix.js")
 		}
 	},
 	module: {
@@ -47,18 +48,6 @@ module.exports = {
 			}]
 		}
 		]
-	},
-	optimization: {
-		splitChunks: {
-			name: false,
-			cacheGroups: {
-				styles: {
-					test: /\.css$/,
-					chunks: 'all',
-					enforce: true
-				}
-		  }
-		}
 	},
 	plugins: [
 		new VueLoaderPlugin(),

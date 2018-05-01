@@ -22,7 +22,6 @@ defmodule MedialibraryWeb do
 		use Phoenix.Controller, namespace: MedialibraryWeb
 		import Plug.Conn
 		import MedialibraryWeb.Router.Helpers
-		import MedialibraryWeb.Gettext
 		end
 	end
 
@@ -39,7 +38,6 @@ defmodule MedialibraryWeb do
 
 		import MedialibraryWeb.Router.Helpers
 		import MedialibraryWeb.ErrorHelpers
-		import MedialibraryWeb.Gettext
 		end
 	end
 
@@ -54,7 +52,6 @@ defmodule MedialibraryWeb do
 	def channel do
 		quote do
 		use Phoenix.Channel
-		import MedialibraryWeb.Gettext
 		end
 	end
 

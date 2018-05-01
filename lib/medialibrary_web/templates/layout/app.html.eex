@@ -8,23 +8,13 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Hello Medialibrary!</title>
+	<title>Medialibrary</title>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="<%= static_path(@conn, "/app.css") %>">
 </head>
 
 <body>
-	<div class="container">
-	<header class="header">
-		<nav role="navigation">
-		<ul class="nav nav-pills pull-right">
-			<li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-		</ul>
-		</nav>
-		<span class="logo"></span>
-	</header>
-
 	<p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
 	<p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 

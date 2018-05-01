@@ -25,10 +25,8 @@
 </template>
 
 <script>
-import Meta from "../mixins/meta";
 
 export default {
-	mixins: [Meta],
 	computed: {
 		isLoading() {
 			return this.$store.getters.isLoading;

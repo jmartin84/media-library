@@ -11,7 +11,9 @@ config :medialibrary, MedialibraryWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: []
+  watchers: [
+	  node: ["node_modules/.bin/webpack-dev-server","--config", "webpack/dev.config.babel.js", "--colors", "--progress", "--stdin"]
+  ]
 
 # ## SSL Support
 #

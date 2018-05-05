@@ -11,7 +11,7 @@
 	<title>Medialibrary</title>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="<%= static_path(@conn, "/app.css") %>">
+	<link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 </head>
 
 <body>
@@ -23,6 +23,7 @@
 	</main>
 
 	</div> <!-- /container -->
-	<script src="<%= static_path(@conn, "/app.js") %>"></script>
+
+	<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 </body>
 </html>

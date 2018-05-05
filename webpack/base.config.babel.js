@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const resolve = (file) => path.resolve(__dirname, file)
 
@@ -12,7 +12,7 @@ module.exports = {
 	},
 	output: {
 		path: resolve('../priv/static'),
-		filename: '[name].[chunkhash].js'
+		filename: 'js/[name].[chunkHash].js'
 	},
 	resolve: {
 		extensions: ['*', '.js', '.json', '.vue'],
@@ -43,7 +43,7 @@ module.exports = {
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
-					name: 'img/[name].[hash:7].[ext]'
+					name: 'image/[name].[hash:7].[ext]'
 				}
 			}]
 		}
@@ -52,10 +52,15 @@ module.exports = {
 	plugins: [
 		new VueLoaderPlugin(),
 		new MiniCssExtractPlugin({
-			filename: "[name].css",
+			filename: "css/[name].[chunkHash].css",
 		}),
 		new ManifestPlugin({
-			fileName: 'manifest.json'
+			fileName: 'manifest.json',
+			map: (item) => {
+				const [fileExtension] = item.name.match(/(js|css)/);
+				return item.isInitial && fileExtension ? {...item, name: path.join(fileExtension, item.name)} : item;
+			}
 		})
+
 	]
 }

@@ -7,6 +7,19 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 module.exports = merge(base, {
 	devtool: 'eval-source-map',
 	mode: "development",
+	output: {
+		filename: '[name].js'
+	},
+	devServer: {
+		contentBase: false,
+		compress: true,
+		port: 9000,
+		hot: false,
+		inline: true,
+		headers: {
+			"Cache-Control": "no-cache"
+		}
+	},
 	plugins: [
 		new FriendlyErrorsPlugin(),
 		// strip dev-only code in Vue source

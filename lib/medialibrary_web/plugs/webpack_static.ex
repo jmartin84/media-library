@@ -31,7 +31,6 @@ defmodule MedialibraryWeb.Webpack_Static do
 
 		if Enum.any?(assets, &(&1 == asset_type)) do
 			{content_type, data} = request_webpack_asset(url, headers)
-
 			conn
 				|> Conn.put_resp_content_type(content_type)
 				|> Conn.send_resp(200, data)

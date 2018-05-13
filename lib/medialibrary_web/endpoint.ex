@@ -3,9 +3,11 @@ defmodule MedialibraryWeb.Endpoint do
 
 	 plug MedialibraryWeb.Webpack_Static,
 		port: 9000, webpack_assets: ~w(css fonts images js),
+		env: Mix.env, manifest_path: "/manifest.json"
+
+	plug Plug.Static,
 		at: "/", from: :medialibrary, gzip: false,
 		only: ~w(css fonts images js favicon.ico robots.txt)
-
 	# Code reloading can be explicitly enabled under the
 	# :code_reloader configuration of your endpoint.
 	if code_reloading? do

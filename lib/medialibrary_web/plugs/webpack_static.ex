@@ -1,8 +1,7 @@
 defmodule MedialibraryWeb.Webpack_Static do
-	alias Medialibrary.Http, as: Http
+	alias HTTPotion, as: Http
 	alias Plug.Conn, as: Conn
 	require Poison
-	require Logger
 
 	def init([port, webpack_assets, env, manifest_path]) do
 		[port, webpack_assets, env, manifest_path]
@@ -15,12 +14,8 @@ defmodule MedialibraryWeb.Webpack_Static do
 		{:manifest_path, manifest_path}
 	]) do
 		if env == :dev do
-			manifest = case manifest_path do
-				path when is_binary(path) -> get_manifest(path, port)
-				_ -> nil
-			end
-
-			serve_asset conn, port, assets, manifest
+			manifest_task = Task.async(fn () -> get_manifest(manifest_path, port) end)
+			serve_asset conn, port, assets, Task.await(manifest_task)
 		else
 			conn
 		end
@@ -31,15 +26,15 @@ defmodule MedialibraryWeb.Webpack_Static do
 		|> URI.merge(path)
 		|> URI.to_string()
 
-		case Http.get(url, [Accept: "application/json"]) do
-			{:error, %{:status => code}} when code == 404 -> raise "404 could not find " <> url
-			{:error, _} -> raise "Unable able to fetch wepback manifest"
-			{:ok, %{:data => data}} -> Poison.decode!(data)
+		case Http.get(url, [headers: [Accept: "application/json"]]) do
+			%HTTPotion.Response{status_code: code} when code == 400 -> raise "404 could not find: #{url}"
+			%HTTPotion.Response{body: body} -> Poison.decode!(body)
+			%HTTPotion.ErrorResponse{message: message} -> raise "Error fetching manifest: #{message}"
 		end
 	end
 
 	defp serve_asset(conn = %Plug.Conn{path_info: [uri, file_name], req_headers: req_headers}, port, assets, manifest) do
-		requested_path = uri <> "/" <> file_name
+		requested_path = "#{uri}/#{file_name}"
 		actual_path = case manifest do
 			%{^requested_path => value} -> value
 			_ -> file_name
@@ -54,23 +49,11 @@ defmodule MedialibraryWeb.Webpack_Static do
 		|> hd
 
 		if Enum.any?(assets, &(&1 == asset_type)) do
-			webpack_response = Http.get(url, [])
-
-			case webpack_response do
-				{:error, %{:status => status}} when status == 404 -> conn
-				{:error, %{:msg => msg}} -> raise msg
-				{:ok, %{
-					:data => data,
-					:headers => resp_headers,
-					:status => status
-				}} -> resp_headers
-					|> Map.to_list()
-					|> Enum.reduce(conn, fn ({name, value}, acc) ->
-						Conn.put_resp_header(acc, name, value)
-					end)
-					|> Conn.send_resp(status, data)
-					|> Conn.halt()
-			end
+			Http.get(url, [
+				stream_to: self(),
+				headers: req_headers
+			])
+			receive_response(conn)
 		else
 			conn
 		end
@@ -78,7 +61,26 @@ defmodule MedialibraryWeb.Webpack_Static do
 
 	defp serve_asset(conn = %Plug.Conn{}, _, _, _), do: conn
 
-	defp bypass_webpack(conn, opts) do
-		Plug.Static.call conn, opts
+	defp receive_response(conn) do
+		receive do
+			%HTTPotion.AsyncChunk{chunk: chunk} ->
+				case Conn.chunk(conn, chunk) do
+					{:ok, conn} -> receive_response(conn)
+					{:error, reason} -> raise reason
+				end
+			%HTTPotion.AsyncHeaders{status_code: status} when status == 404 -> conn
+			%HTTPotion.AsyncHeaders{
+				headers: %HTTPotion.Headers{hdrs: headers}
+			} ->
+				headers
+				|> Map.to_list()
+				|> Enum.reduce(conn, fn ({key, value}, acc) -> Conn.put_resp_header(acc, key, value) end)
+				|> Conn.send_chunked(200)
+				|> receive_response()
+			%HTTPotion.AsyncEnd{} -> Conn.halt(conn)
+			%HTTPotion.ErrorResponse{message: message} -> raise "Error fetching webpack resource: #{message}"
+		after
+			5_000 -> raise "Error fetching webpack resource: Timeout exceeded"
+		end
 	end
 end

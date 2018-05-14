@@ -1,7 +1,7 @@
 defmodule MedialibraryWeb.Endpoint do
 	use Phoenix.Endpoint, otp_app: :medialibrary
 
-	 plug MedialibraryWeb.Webpack_Static,
+	 plug WebpackStatic.Plug,
 		port: 9000, webpack_assets: ~w(css fonts images js),
 		env: Mix.env, manifest_path: "/manifest.json"
 

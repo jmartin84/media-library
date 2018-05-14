@@ -38,7 +38,8 @@ defmodule Medialibrary.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:cowboy, "~> 1.0"},
       {:httpotion, "~> 3.1.0"},
-      {:poison, "~> 3.1"},
+	  {:poison, "~> 3.1"},
+	{:webpack_static_plug, "~> 0.1.1"},
 	  {:credo, "~> 0.5", only: [:dev, :test]},
 	  {:dogma, "~> 0.1", only: [:dev]}
     ]

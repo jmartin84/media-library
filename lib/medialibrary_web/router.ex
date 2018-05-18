@@ -1,26 +1,27 @@
 defmodule MedialibraryWeb.Router do
-	use MedialibraryWeb, :router
+  use MedialibraryWeb, :router
 
-	pipeline :browser do
-		plug :accepts, ["html"]
-		plug :fetch_session
-		plug :fetch_flash
-		plug :protect_from_forgery
-		plug :put_secure_browser_headers
-	end
+  pipeline :browser do
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_flash)
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
+  end
 
-	pipeline :api do
-		plug :accepts, ["json"]
-	end
+  pipeline :api do
+    plug(:accepts, ["json"])
+  end
 
-	scope "/", MedialibraryWeb do
-		pipe_through :browser # Use the default browser stack
+  scope "/", MedialibraryWeb do
+    # Use the default browser stack
+    pipe_through(:browser)
 
-		get "/", PageController, :index
-	end
+    get("/", PageController, :index)
+  end
 
-	# Other scopes may use custom stacks.
-	scope "/api", MedialibraryWeb do
-		pipe_through :api
-	end
+  # Other scopes may use custom stacks.
+  scope "/api", MedialibraryWeb do
+    pipe_through(:api)
+  end
 end

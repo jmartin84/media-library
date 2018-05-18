@@ -1,3 +1,3 @@
 defmodule MedialibraryWeb.PageView do
-	use MedialibraryWeb, :view
+  use MedialibraryWeb, :view
 end

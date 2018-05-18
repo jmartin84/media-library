@@ -5,9 +5,9 @@ import TheMediaGrid from './TheMediaGrid';
 import MediaGridTile from './MediaGridTile';
 
 export default {
-	TheHeader,
-	TheLoader,
-	TheCreateMediaDialog,
-	TheMediaGrid,
-	MediaGridTile
+  TheHeader,
+  TheLoader,
+  TheCreateMediaDialog,
+  TheMediaGrid,
+  MediaGridTile
 }

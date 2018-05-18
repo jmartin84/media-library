@@ -44,33 +44,33 @@ import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
 
 import {
-	DASHBOARD_SEARCH,
-	APP_TOGGLE_LOADING,
-	MEDIA_SHOW_CREATE_DIALOG
+  DASHBOARD_SEARCH,
+  APP_TOGGLE_LOADING,
+  MEDIA_SHOW_CREATE_DIALOG
 } from '../store/actions';
 
 export default {
-	data: () => ({
-		title: 'Media Library',
-		isSearchActive: false,
-		searchValue: ''
-	}),
-	watch: {
-		searchValue (val) {
-			this.toggleLoading().test;
-			this.search(val);
-		}
-	},
-	methods: {
-		search: debounce(function (val) {
-			this.$store.dispatch(DASHBOARD_SEARCH, val);
-		}, 500),
-		toggleLoading: throttle(function () {
-			this.$store.dispatch(APP_TOGGLE_LOADING, true);
-		}, 500, { trailing: false }),
-		createMovie() {
-			this.$store.dispatch(MEDIA_SHOW_CREATE_DIALOG);
-		}
-	}
+  data: () => ({
+    title: 'Media Library',
+    isSearchActive: false,
+    searchValue: ''
+  }),
+  watch: {
+    searchValue (val) {
+      this.toggleLoading();
+      this.search(val);
+    }
+  },
+  methods: {
+    search: debounce(function search(val) {
+      this.$store.dispatch(DASHBOARD_SEARCH, val);
+    }, 500),
+    toggleLoading: throttle(function toggleLoading() {
+      this.$store.dispatch(APP_TOGGLE_LOADING, true);
+    }, 500, { trailing: false }),
+    createMovie() {
+      this.$store.dispatch(MEDIA_SHOW_CREATE_DIALOG);
+    }
+  }
 }
 </script>

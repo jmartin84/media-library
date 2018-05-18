@@ -1,3 +1,3 @@
 defmodule MedialibraryWeb.LayoutView do
-	use MedialibraryWeb, :view
+  use MedialibraryWeb, :view
 end

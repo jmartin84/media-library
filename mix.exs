@@ -6,9 +6,9 @@ defmodule Medialibrary.Mixfile do
       app: :medialibrary,
       version: "0.0.1",
       elixir: "~> 1.4",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -25,7 +25,7 @@ defmodule Medialibrary.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -38,10 +38,10 @@ defmodule Medialibrary.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:cowboy, "~> 1.0"},
       {:httpotion, "~> 3.1.0"},
-	  {:poison, "~> 3.1"},
-		{:webpack_static_plug, "~> 0.2.0"},
-	  {:credo, "~> 0.5", only: [:dev, :test]},
-	  {:dogma, "~> 0.1", only: [:dev]}
+      {:poison, "~> 3.1"},
+      {:webpack_static_plug, "~> 0.2.0"},
+      {:credo, "~> 0.5", only: [:dev, :test]},
+      {:dogma, "~> 0.1", only: [:dev]}
     ]
   end
 end

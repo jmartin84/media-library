@@ -5,13 +5,13 @@ module.exports = {
     sourceType: 'module'
   },
   extends: [
-		'airbnb-base',
-		'prettier'
-	],
+    'airbnb-base',
+    'prettier'
+  ],
   // required to lint *.vue files
   plugins: [
-		'html',
-		'vue'
+    'html',
+    'vue'
   ],
   // check if imports actually resolve
   'settings': {
@@ -27,7 +27,7 @@ module.exports = {
     'import/extensions': ['error', 'always', {
       'js': 'never',
       'vue': 'never'
-		}],
-		'indent': ['error', 'tab']
+    }],
+    'indent': ['error', 2]
   }
 }

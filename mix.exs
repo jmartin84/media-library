@@ -41,7 +41,9 @@ defmodule Medialibrary.Mixfile do
       {:poison, "~> 3.1"},
       {:webpack_static_plug, "~> 0.2.0"},
       {:credo, "~> 0.5", only: [:dev, :test]},
-      {:dogma, "~> 0.1", only: [:dev]}
+      {:dogma, "~> 0.1", only: [:dev]},
+      {:mox, "~> 0.3", only: :test},
+      {:bypass, "~> 0.8", only: :test}
     ]
   end
 end

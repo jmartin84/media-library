@@ -10,7 +10,12 @@ defmodule Medialibrary.Http do
       headers: headers
     )
 
-    receive_response()
+    response = receive_response()
+
+    case response do
+      {:ok, %{:data => data}} -> Poison.decode(data)
+      {:error, _} -> response
+    end
   end
 
   def post(url, body) do
@@ -26,10 +31,6 @@ defmodule Medialibrary.Http do
   end
 
   defp receive_response(results \\ %{})
-
-  defp receive_response(results = %{status: code}) when code >= 400,
-    do: {:error, %{:msg => results, :status => code}}
-
   defp receive_response(results = {:error, _}), do: results
   defp receive_response(results = {:ok, _}), do: results
 
@@ -44,24 +45,18 @@ defmodule Medialibrary.Http do
         |> elem(1)
         |> receive_response()
 
-      %HTTPotion.AsyncHeaders{
-        status_code: status,
-        headers: %HTTPotion.Headers{hdrs: headers}
-      } ->
-        results
-        |> Map.put(:status, status)
-        |> Map.put(:headers, headers)
-        |> receive_response()
+      %HTTPotion.AsyncHeaders{status_code: code} when code >= 400 ->
+        {:error, %{:msg => "HTTP Request: failed with #{code}", :status => code}}
 
       %HTTPotion.AsyncEnd{} ->
         receive_response({:ok, results})
 
       %HTTPotion.ErrorResponse{message: message} ->
         receive_response({:error, %{:msg => "HTTP Request Error: #{message}", :status => 500}})
-    after
-      5_000 ->
-        {:error, %{:msg => "HTTP Request: Operation Timed out", :status => 504}}
-        |> receive_response()
+        # after
+        #   15_000 ->
+        #     {:error, %{:msg => "HTTP Request: Operation Timed out", :status => 504}}
+        #     |> receive_response()
     end
   end
 end

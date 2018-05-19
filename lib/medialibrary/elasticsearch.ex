@@ -47,8 +47,9 @@ defmodule Medialibrary.ElasticSearch do
         }
       end
 
-    Http.post(url, query)
-    |> case do
+    results = Http.post(url, query)
+
+    case results do
       {:ok, %{"error" => err, "status" => code}} -> {:error, %{:msg => err, :code => code}}
       {:ok, %{:data => data}} -> map_search_results(Poison.decode(data))
       {:error, data} -> {:error, data}

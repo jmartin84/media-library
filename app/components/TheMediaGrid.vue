@@ -18,9 +18,7 @@
 </style>
 
 <script lang="babel">
-import {
-  GET_MEDIA_ITEMS
-} from '../store/getters';
+import { GET_MEDIA_ITEMS } from '../store/getters';
 
 
 export default {
@@ -29,7 +27,7 @@ export default {
       return this
         .$store
         .getters[GET_MEDIA_ITEMS];
-    }
-  }
-}
+    },
+  },
+};
 </script>

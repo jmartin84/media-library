@@ -1,4 +1,4 @@
-import { DASHBOARD_SEARCH, APP_TOGGLE_LOADING } from '../actions';
+// import { DASHBOARD_SEARCH, APP_TOGGLE_LOADING } from '../actions';
 
 export default {
   namespaced: true,
@@ -8,7 +8,6 @@ export default {
   actions: {
     search: ({ commit }, searchTerm) => {
       commit('searchTerm', searchTerm);
-      console.log(searchTerm);
     }
   },
   mutations: {

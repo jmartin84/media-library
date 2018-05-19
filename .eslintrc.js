@@ -28,6 +28,8 @@ module.exports = {
       'js': 'never',
       'vue': 'never'
     }],
-    'indent': ['error', 2]
+    'indent': ['error', 2],
+    'no-return-assign': 0,
+    'no-param-reassign': 0
   }
 }

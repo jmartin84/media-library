@@ -1,23 +1,24 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+/* eslint-disable import/prefer-default-export */
+import Vue from 'vue';
+import Vuex from 'vuex';
 import * as modules from './modules';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export function createStore () {
+export function createStore() {
   return new Vuex.Store({
     modules,
     state: {
-      isLoading: false
+      isLoading: false,
     },
     actions: {
-      toggleLoading: ({ commit }, isLoading) => commit('isLoading', isLoading)
+      toggleLoading: ({ commit }, isLoading) => commit('isLoading', isLoading),
     },
     mutations: {
-      isLoading: (state, isLoading) => state.isLoading = isLoading
+      isLoading: (state, isLoading) => state.isLoading = isLoading,
     },
     getters: {
-      isLoading: (state) => state.isLoading
-    }
-  })
+      isLoading: state => state.isLoading,
+    },
+  });
 }

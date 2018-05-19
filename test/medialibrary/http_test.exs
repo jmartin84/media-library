@@ -42,7 +42,7 @@ defmodule Medialibrary.HttpTest do
         assert status == 400
         assert msg == "HTTP Request: failed with 400"
 
-      {:ok, result} ->
+      {:ok, _} ->
         raise "Http request was expected to fail"
     end
   end
@@ -71,7 +71,7 @@ defmodule Medialibrary.HttpTest do
 
     case response do
       {:error, %{:msg => message}} -> raise "Response did not return :ok got #{message}"
-      {:ok, result} -> result == "success"
+      {:ok, %{:data => result}} -> assert result == "success"
     end
   end
 
@@ -102,7 +102,7 @@ defmodule Medialibrary.HttpTest do
         assert status == 500
         assert msg == "HTTP Request: failed with 500"
 
-      {:ok, result} ->
+      {:ok, _} ->
         raise "Http request was expected to fail"
     end
   end

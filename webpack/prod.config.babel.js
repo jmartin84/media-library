@@ -9,11 +9,11 @@ module.exports = merge(base, {
   mode: 'production',
   plugins: [
     new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.css$/
+      assetNameRegExp: /\.css$/,
     }),
     // strip dev-only code in Vue source
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('"production"')
-    })
-  ]
-})
+      'process.env.NODE_ENV': JSON.stringify('"production"'),
+    }),
+  ],
+});

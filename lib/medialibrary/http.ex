@@ -53,10 +53,10 @@ defmodule Medialibrary.Http do
 
       %HTTPotion.ErrorResponse{message: message} ->
         receive_response({:error, %{:msg => "HTTP Request Error: #{message}", :status => 500}})
-        # after
-        #   15_000 ->
-        #     {:error, %{:msg => "HTTP Request: Operation Timed out", :status => 504}}
-        #     |> receive_response()
+        after
+          15_000 ->
+            {:error, %{:msg => "HTTP Request: Operation Timed out", :status => 504}}
+            |> receive_response()
     end
   end
 end

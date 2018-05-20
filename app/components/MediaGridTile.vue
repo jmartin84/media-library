@@ -52,16 +52,14 @@
 </style>
 
 <script lang="babel">
-import {
-  MEDIA_DELETE
-} from '../store/actions';
+import { MEDIA_DELETE } from '../store/actions';
 
 export default {
   props: ['data'],
   methods: {
     deleteItem() {
       this.$store.dispatch(MEDIA_DELETE, this.data.id);
-    }
-  }
-}
+    },
+  },
+};
 </script>

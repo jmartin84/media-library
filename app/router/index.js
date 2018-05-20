@@ -1,22 +1,23 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+/* eslint-disable import/prefer-default-export */
+import Vue from 'vue';
+import Router from 'vue-router';
 
 // The meta data for your routes
-const meta = require('./meta.json')
+const meta = require('./meta.json');
 
 // Function to create routes
 // Is default lazy but can be changed
-function route (path, view) {
+function route(path, view) {
   return {
     path,
     meta: meta[path],
-    component: resolve => import(`../pages/${view}View.vue`).then(resolve)
-  }
+    component: resolve => import(`../pages/${view}View.vue`).then(resolve),
+  };
 }
 
-Vue.use(Router)
+Vue.use(Router);
 
-export function createRouter () {
+export function createRouter() {
   const router = new Router({
     base: __dirname,
     mode: 'history',
@@ -25,9 +26,9 @@ export function createRouter () {
       route('/', 'Dashboard'),
       route('/movie/create', 'CreateMovie'),
       // Global redirect for 404
-      { path: '*', redirect: '/' }
-    ]
-  })
+      { path: '*', redirect: '/' },
+    ],
+  });
 
-  return router
+  return router;
 }

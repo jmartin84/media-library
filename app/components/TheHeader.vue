@@ -46,20 +46,20 @@ import throttle from 'lodash/throttle';
 import {
   DASHBOARD_SEARCH,
   APP_TOGGLE_LOADING,
-  MEDIA_SHOW_CREATE_DIALOG
+  MEDIA_SHOW_CREATE_DIALOG,
 } from '../store/actions';
 
 export default {
   data: () => ({
     title: 'Media Library',
     isSearchActive: false,
-    searchValue: ''
+    searchValue: '',
   }),
   watch: {
-    searchValue (val) {
+    searchValue(val) {
       this.toggleLoading();
       this.search(val);
-    }
+    },
   },
   methods: {
     search: debounce(function search(val) {
@@ -70,7 +70,7 @@ export default {
     }, 500, { trailing: false }),
     createMovie() {
       this.$store.dispatch(MEDIA_SHOW_CREATE_DIALOG);
-    }
-  }
-}
+    },
+  },
+};
 </script>

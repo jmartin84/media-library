@@ -73,12 +73,12 @@
 <script lang="babel">
 import {
   GET_MEDIA_SHOW_DIALOG_STATE,
-  GET_MEDIA_SELECT_ITEMS
+  GET_MEDIA_SELECT_ITEMS,
 } from '../store/getters';
 
 import {
   MEDIA_CLOSE_CREATE_DIALOG,
-  MEDIA_CREATE
+  MEDIA_CREATE,
 } from '../store/actions';
 
 export default {
@@ -86,10 +86,10 @@ export default {
     name: '',
     tags: [],
     source: [],
-    type: ''
+    type: '',
   }),
   computed: {
-    shouldShowDialog () {
+    shouldShowDialog() {
       return this
         .$store
         .getters[GET_MEDIA_SHOW_DIALOG_STATE];
@@ -111,28 +111,30 @@ export default {
         .$store
         .getters[GET_MEDIA_SELECT_ITEMS]
         .typeList;
-    }
+    },
   },
   methods: {
-    close () {
+    close() {
       this.$store.dispatch(MEDIA_CLOSE_CREATE_DIALOG);
     },
-    save () {
-      const { name, tags, source, type } = this;
+    save() {
+      const {
+        name, tags, source, type,
+      } = this;
       this.$store.dispatch(MEDIA_CREATE, {
         name,
         tags,
         source,
-        type
+        type,
       });
 
       Object.assign(this, {
         name: '',
         type: [],
         source: [],
-        tags: []
+        tags: [],
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>

@@ -30,7 +30,7 @@ export default {
   computed: {
     isLoading() {
       return this.$store.getters.isLoading;
-    }
-  }
+    },
+  },
 };
 </script>

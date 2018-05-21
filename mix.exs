@@ -43,7 +43,8 @@ defmodule Medialibrary.Mixfile do
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:dogma, "~> 0.1", only: [:dev]},
       {:mox, "~> 0.3", only: :test},
-      {:bypass, "~> 0.8", only: :test}
+      {:bypass, "~> 0.8", only: :test},
+      {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false}
     ]
   end
 end

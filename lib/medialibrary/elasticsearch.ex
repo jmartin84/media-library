@@ -1,6 +1,8 @@
 defmodule Medialibrary.ElasticSearch do
   @moduledoc "Exposes functions to query and malipulate data in elastic search"
-  alias Medialibrary.Http, as: Http
+
+  @http Application.get_env(:medialibrary, :http)
+  @base_url Application.get_env(:medialibrary, :elastic_search)
 
   @doc """
   	This function is used to search the medial library index for a given term.
@@ -14,8 +16,10 @@ defmodule Medialibrary.ElasticSearch do
 
   	Returns `{:ok, results}` for success and `{:error, msg}` on failure
   """
+
+  @spec search(String.t()) :: {:ok, [Map]} | {:error, Map}
   def search(term \\ "") do
-    url = Application.get_env(:medialibrary, :elastic_search) <> "/media/_search"
+    url = @base_url <> "/media/_search"
 
     query =
       if term == "" do
@@ -47,12 +51,22 @@ defmodule Medialibrary.ElasticSearch do
         }
       end
 
-    results = Http.post(url, query)
+    results = @http.post(url, query)
 
     case results do
-      {:ok, %{"error" => err, "status" => code}} -> {:error, %{:msg => err, :code => code}}
-      {:ok, %{:data => data}} -> map_search_results(Poison.decode(data))
-      {:error, data} -> {:error, data}
+      {:ok, %{"error" => err, "status" => code}} ->
+        {:error, %{:msg => err, :status => code}}
+
+      {:ok, %{:data => data}} ->
+        results =
+          data
+          |> Poison.decode()
+          |> map_search_results()
+
+        {:ok, results}
+
+      {:error, data} ->
+        {:error, data}
     end
   end
 
@@ -76,6 +90,4 @@ defmodule Medialibrary.ElasticSearch do
   end
 
   defp map_search_results(error = {:error, _}), do: error
-
-  defp map_search_results({:ok, _}), do: []
 end
